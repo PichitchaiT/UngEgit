@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:ungegat/utility/my_constant.dart';
 
 class ShowFrom extends StatelessWidget {
   final String hint;
@@ -35,9 +36,11 @@ class ShowFrom extends StatelessWidget {
           left: 16,
         ),
         enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: MyConstant.dark),
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: MyConstant.active),
           borderRadius: BorderRadius.circular(20),
         ),
       ),

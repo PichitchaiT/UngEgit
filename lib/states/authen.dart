@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
+import 'package:ungegat/utility/my_dialog.dart';
 import 'package:ungegat/widgets/show_button.dart';
 import 'package:ungegat/widgets/show_from.dart';
 import 'package:ungegat/widgets/show_image.dart';
@@ -14,6 +17,7 @@ class Authen extends StatefulWidget {
 
 class _AuthenState extends State<Authen> {
   bool redEye = true;
+  String? user, password;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,8 @@ class _AuthenState extends State<Authen> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusScopeNode());
           },
-          child: Container(decoration: MyConstant().bgBox(),
+          child: Container(
+            decoration: MyConstant().bgBox(),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +55,16 @@ class _AuthenState extends State<Authen> {
       width: boxConstraints.maxWidth * 0.6,
       child: ShowButtom(
         label: 'Login',
-        pressFunc: () {},
+        pressFunc: () {
+          print('user = $user , password = $password');
+          if ((user?.isEmpty ?? true) || (password?.isEmpty ?? true)) {
+            print('Have Space');
+            MyDialog(context: context)
+                .normalDialog(title: 'Have Space ?', subtitle: 'Please Fill Every Blank');
+          } else {
+            print('No space');
+          }
+        },
       ),
     );
   }
@@ -69,7 +83,9 @@ class _AuthenState extends State<Authen> {
         obSecu: redEye,
         hint: 'Password',
         iconData: Icons.lock_clock_outlined,
-        changefung: (String string) {},
+        changefung: (String string) {
+          password = string.trim();
+        },
       ),
     );
   }
@@ -77,12 +93,14 @@ class _AuthenState extends State<Authen> {
   Container formUser(BoxConstraints boxConstraints) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
-      width: boxConstraints.maxWidth * 0.55,
+      width: boxConstraints.maxWidth * 0.6,
       height: 40,
       child: ShowFrom(
         hint: 'User :',
         iconData: Icons.person_outline,
-        changefung: (String string) {},
+        changefung: (String string) {
+          user = string.trim();
+        },
       ),
     );
   }
