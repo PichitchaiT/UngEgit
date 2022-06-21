@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
+import 'package:ungegat/widgets/show_button.dart';
 import 'package:ungegat/widgets/show_from.dart';
 import 'package:ungegat/widgets/show_image.dart';
 import 'package:ungegat/widgets/show_text.dart';
@@ -29,14 +30,26 @@ class _AuthenState extends State<Authen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 newLogo(boxConstraints),
-                newTitel(),
+                newTitel(boxConstraints),
                 formUser(boxConstraints),
-                formPassword(boxConstraints)
+                formPassword(boxConstraints),
+                buttonLogin(boxConstraints),
               ],
             ),
           ),
         );
       }),
+    );
+  }
+
+  Container buttonLogin(BoxConstraints boxConstraints) {
+    return Container(
+      margin: const EdgeInsets.only(top: 15),
+      width: boxConstraints.maxWidth * 0.6,
+      child: ShowButtom(
+        label: 'Login',
+        pressFunc: () {},
+      ),
     );
   }
 
@@ -72,17 +85,31 @@ class _AuthenState extends State<Authen> {
     );
   }
 
-  ShowText newTitel() {
-    return ShowText(
-      text: 'Login :',
-      textStyle: MyConstant().h1Style(),
+  SizedBox newTitel(BoxConstraints boxConstraints) {
+    return SizedBox(
+      width: boxConstraints.maxWidth * 0.6,
+      child: Row(
+        children: [
+          ShowText(
+            text: 'Login :',
+            textStyle: MyConstant().h1Style(),
+          ),
+        ],
+      ),
     );
   }
 
   SizedBox newLogo(BoxConstraints boxConstraints) {
     return SizedBox(
-      width: boxConstraints.maxWidth * 0.40,
-      child: ShowImage(),
+      width: boxConstraints.maxWidth * 0.6,
+      child: Row(
+        children: [
+          SizedBox(
+            width: boxConstraints.maxWidth * 0.25,
+            child: ShowImage(),
+          ),
+        ],
+      ),
     );
   }
 }

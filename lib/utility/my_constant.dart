@@ -6,6 +6,11 @@ class MyConstant {
   static Color dark = Colors.black;
 
   // Method
+
+  BoxDecoration bgBox() {
+    return BoxDecoration();
+  }
+
   TextStyle h1Style() {
     return TextStyle(
       fontSize: 36,
@@ -29,5 +34,4 @@ class MyConstant {
       fontWeight: FontWeight.normal,
     );
   }
-
 }
