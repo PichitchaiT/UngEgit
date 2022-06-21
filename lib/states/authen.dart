@@ -4,48 +4,72 @@ import 'package:ungegat/widgets/show_from.dart';
 import 'package:ungegat/widgets/show_image.dart';
 import 'package:ungegat/widgets/show_text.dart';
 
-class Authen extends StatelessWidget {
+class Authen extends StatefulWidget {
   const Authen({Key? key}) : super(key: key);
+
+  @override
+  State<Authen> createState() => _AuthenState();
+}
+
+class _AuthenState extends State<Authen> {
+  bool redEye = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints boxConstraints) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              newLogo(boxConstraints),
-              newTitel(),
-              formUser(boxConstraints),
-              Container(
-                margin: const EdgeInsets.only(top: 16),
-                height: 40,
-                width: boxConstraints.maxWidth * 0.6,
-                child: ShowFrom(
-                  hint: 'Password',
-                  iconData: Icons.lock_clock_outlined, 
-                  changefung: (String string) {  }, )
-            ,
-              )],
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusScopeNode());
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                newLogo(boxConstraints),
+                newTitel(),
+                formUser(boxConstraints),
+                formPassword(boxConstraints)
+              ],
+            ),
           ),
         );
       }),
     );
   }
 
+  Container formPassword(BoxConstraints boxConstraints) {
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      height: 40,
+      width: boxConstraints.maxWidth * 0.6,
+      child: ShowFrom(
+        redEyeFunc: () {
+          setState(() {
+            redEye = !redEye;
+          });
+        },
+        obSecu: redEye,
+        hint: 'Password',
+        iconData: Icons.lock_clock_outlined,
+        changefung: (String string) {},
+      ),
+    );
+  }
+
   Container formUser(BoxConstraints boxConstraints) {
     return Container(
-              margin: const EdgeInsets.only(top: 20),
-              width: boxConstraints.maxWidth * 0.55,
-              height: 40,
-              child: ShowFrom(
-                hint: 'User :',
-                iconData: Icons.person_outline,
-                changefung: (String string) {},
-              ),
-            );
+      margin: const EdgeInsets.only(top: 20),
+      width: boxConstraints.maxWidth * 0.55,
+      height: 40,
+      child: ShowFrom(
+        hint: 'User :',
+        iconData: Icons.person_outline,
+        changefung: (String string) {},
+      ),
+    );
   }
 
   ShowText newTitel() {
