@@ -8,7 +8,13 @@ class MyConstant {
   // Method
 
   BoxDecoration bgBox() {
-    return BoxDecoration();
+    return BoxDecoration(
+      gradient: RadialGradient(
+        radius: 1.5,
+        center: const Alignment(-0.3, -0.35),
+        colors: [Colors.white, primary],
+      ),
+    );
   }
 
   TextStyle h1Style() {

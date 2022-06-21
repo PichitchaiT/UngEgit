@@ -22,6 +22,8 @@ class ShowFrom extends StatelessWidget {
       obscureText: obSecu ?? false,
       onChanged: changefung,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.5),
         suffixIcon: redEyeFunc == null
             ? Icon(iconData)
             : IconButton(

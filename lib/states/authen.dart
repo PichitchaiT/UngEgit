@@ -25,16 +25,18 @@ class _AuthenState extends State<Authen> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusScopeNode());
           },
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                newLogo(boxConstraints),
-                newTitel(boxConstraints),
-                formUser(boxConstraints),
-                formPassword(boxConstraints),
-                buttonLogin(boxConstraints),
-              ],
+          child: Container(decoration: MyConstant().bgBox(),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  newLogo(boxConstraints),
+                  newTitel(boxConstraints),
+                  formUser(boxConstraints),
+                  formPassword(boxConstraints),
+                  buttonLogin(boxConstraints),
+                ],
+              ),
             ),
           ),
         );
