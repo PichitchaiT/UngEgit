@@ -3,6 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ungegat/states/authen.dart';
+import 'package:ungegat/states/my_service.dart';
+
+final Map<String, WidgetBuilder> map = {
+  '/authen': (context) => const Authen(),
+  '/myService': (context) => const MyService(),
+};
+
+String? firstState;
 
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverride();
@@ -11,8 +19,13 @@ Future<void> main() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var result = preferences.getStringList('data');
   print('result = $result');
-
-  runApp(MyApp());
+  if (result == null) {
+    firstState = '/authen';
+    runApp(MyApp());
+  } else {
+    firstState = '/myService';
+    runApp(MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +34,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Authen(),
+      debugShowCheckedModeBanner: false,
+      routes: map,
+      initialRoute: firstState,
     );
   }
 }

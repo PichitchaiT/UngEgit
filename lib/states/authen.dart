@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ungegat/modeis/user_model.dart';
 import 'package:ungegat/states/my_service.dart';
 import 'package:ungegat/utility/my_constant.dart';
@@ -154,14 +154,25 @@ class _AuthenState extends State<Authen> {
         for (var element in result) {
           UserModel userModel = UserModel.fromMap(element);
           if (password == userModel.password) {
-            MyDialog(context: context).normalDialog(lable: 'Go To Service',
-                pressFunc: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyService(),
-                      ),
-                      (route) => false);
+            MyDialog(context: context).normalDialog(
+                lable: 'Go To Service',
+                pressFunc: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+
+                  var data = <String>[];
+                  data.add(userModel.id);
+                  data.add(userModel.name);
+                  data.add(userModel.position);
+
+                  preferences.setStringList('data', data).then((value) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MyService(),
+                        ),
+                        (route) => false);
+                  });
                 },
                 title: 'Welcome to App',
                 subtitle: 'Login Success Welcome ${userModel.name}');
