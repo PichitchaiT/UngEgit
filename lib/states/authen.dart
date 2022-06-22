@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/utility/my_dialog.dart';
@@ -59,10 +60,11 @@ class _AuthenState extends State<Authen> {
           print('user = $user , password = $password');
           if ((user?.isEmpty ?? true) || (password?.isEmpty ?? true)) {
             print('Have Space');
-            MyDialog(context: context)
-                .normalDialog(title: 'Have Space ?', subtitle: 'Please Fill Every Blank');
+            MyDialog(context: context).normalDialog(
+                title: 'Have Space ?', subtitle: 'Please Fill Every Blank');
           } else {
             print('No space');
+            ProcessCheckLogin();
           }
         },
       ),
@@ -131,5 +133,13 @@ class _AuthenState extends State<Authen> {
         ],
       ),
     );
+  }
+
+  Future<void> ProcessCheckLogin() async {
+    String path =
+        'https://www.androidthai.in.th/egat/getUserWhereUser_toy1.php?isAdd=true&user=$user';
+    await Dio().get(path).then((value) => {
+      print('value ==> $value')
+    });
   }
 }
