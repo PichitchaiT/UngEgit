@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:ungegat/modeis/user_model.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/utility/my_dialog.dart';
 import 'package:ungegat/widgets/show_button.dart';
@@ -148,6 +149,15 @@ class _AuthenState extends State<Authen> {
             title: 'User Fale', subtitle: 'No $user in my Database');
       } else {
         var result = json.decode(value.data);
+        print('result ==> $result');
+        for (var element in result) {
+          UserModel userModel = UserModel.fromMap(element);
+          if (password == userModel.password) {
+          } else {
+            MyDialog(context: context).normalDialog(
+                title: 'Password False', subtitle: 'Please Try Again');
+          }
+        }
       }
     });
   }
