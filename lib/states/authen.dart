@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
@@ -140,6 +142,13 @@ class _AuthenState extends State<Authen> {
         'https://www.androidthai.in.th/egat/getUserWhereUser_toy1.php?isAdd=true&user=$user';
     await Dio().get(path).then((value) {
       print('value ==> $value');
+
+      if (value.toString() == 'null') {
+        MyDialog(context: context).normalDialog(
+            title: 'User Fale', subtitle: 'No $user in my Database');
+      } else {
+        var result = json.decode(value.data);
+      }
     });
   }
 }
