@@ -45,4 +45,12 @@ class MyConstant {
       fontWeight: FontWeight.normal,
     ));
   }
+  TextStyle h3ActiveStyle() {
+    return GoogleFonts.mali(
+        textStyle: TextStyle(
+      fontSize: 10,
+      color: active,
+      fontWeight: FontWeight.normal,
+    ));
+  }
 }

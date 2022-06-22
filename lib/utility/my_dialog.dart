@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/widgets/show_image.dart';
 import 'package:ungegat/widgets/show_text.dart';
+import 'package:ungegat/widgets/show_textbutton.dart';
 
 class MyDialog {
   final BuildContext context;
@@ -14,20 +15,27 @@ class MyDialog {
     required String subtitle,
   }) async {
     showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: ListTile(
-                leading: const SizedBox(
-                  width: 80,
-                  child: ShowImage(),
-                ),
-                title: ShowText(
-                  text: title,
-                  textStyle: MyConstant().h2Style(),
-                ),
-                subtitle: ShowText(text: subtitle),
-              ),
-            ),
-            );
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: ListTile(
+          leading: const SizedBox(
+            width: 80,
+            child: ShowImage(),
+          ),
+          title: ShowText(
+            text: title,
+            textStyle: MyConstant().h2Style(),
+          ),
+          subtitle: ShowText(text: subtitle),
+        ),
+        actions: [
+          ShowTextButton(
+              lable: 'OK',
+              pressFunc: () {
+                Navigator.pop(context);
+              })
+        ],
+      ),
+    );
   }
 }
