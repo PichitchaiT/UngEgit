@@ -153,6 +153,9 @@ class _AuthenState extends State<Authen> {
         for (var element in result) {
           UserModel userModel = UserModel.fromMap(element);
           if (password == userModel.password) {
+            MyDialog(context: context).normalDialog(
+                title: 'Welcome to App',
+                subtitle: 'Login Success Welcome ${userModel.name}');
           } else {
             MyDialog(context: context).normalDialog(
                 title: 'Password False', subtitle: 'Please Try Again');

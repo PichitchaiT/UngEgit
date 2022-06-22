@@ -13,6 +13,8 @@ class MyDialog {
   Future<void> normalDialog({
     required String title,
     required String subtitle,
+    String? lable,
+    Function()? pressFunc
   }) async {
     showDialog(
       context: context,
@@ -29,11 +31,12 @@ class MyDialog {
           subtitle: ShowText(text: subtitle),
         ),
         actions: [
+          pressFunc == null ?  
           ShowTextButton(
               lable: 'OK',
               pressFunc: () {
                 Navigator.pop(context);
-              })
+              }):ShowTextButton(lable: lable!, pressFunc: pressFunc),
         ],
       ),
     );
