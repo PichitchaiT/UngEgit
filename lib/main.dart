@@ -1,10 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ungegat/states/authen.dart';
 
-void main() {
+Future<void> main() async {
   HttpOverrides.global = MyHttpOverride();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  var result = preferences.getStringList('data');
+  print('result = $result');
 
   runApp(MyApp());
 }
