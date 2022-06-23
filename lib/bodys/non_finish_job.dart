@@ -21,18 +21,45 @@ class _NonFinishJobState extends State<NonFinishJob> {
   void initState() {
     super.initState();
     dataUserLogin = widget.dataUserLogin;
+    readDataJob();
+  }
+
+  Future<void> readDataJob() async {
+    String idOfficer = dataUserLogin[0];
+    String path =
+        'https://www.androidthai.in.th/egat/getUserWhereidofficer_toy1.php?isAdd=true&idOfficer=$idOfficer';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        ShowText(
-          text: 'ชื่อพนักงาน :',
-          textStyle: MyConstant().h2Style(),
-        ),
-        ShowText(text: dataUserLogin[1]),
+        showtitle(head: 'ชื่อพนักงาน :', value: dataUserLogin[1]),
+        showtitle(head: 'ตำแหน่ง :', value: dataUserLogin[2]),
       ],
+    );
+  }
+
+  Card showtitle({required String head, required String value}) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: ShowText(
+                text: head,
+                textStyle: MyConstant().h2Style(),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: ShowText(text: value),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

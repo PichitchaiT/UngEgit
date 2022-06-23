@@ -57,7 +57,7 @@ class _MyServiceState extends State<MyService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 160, 213, 248),
       appBar: newAppBar(context),
       body: widgets.isEmpty ? const ShowProgress() : widgets[indexBodys],
       bottomNavigationBar: BottomNavigationBar(
@@ -81,7 +81,7 @@ class _MyServiceState extends State<MyService> {
       ),
       elevation: 0,
       foregroundColor: MyConstant.dark,
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 83, 183, 201),
       actions: [
         ShowIconButton(
             iconData: Icons.exit_to_app,
