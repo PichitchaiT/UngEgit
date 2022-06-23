@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ungegat/modeis/job_model.dart';
+import 'package:ungegat/states/detail.dart';
+import 'package:ungegat/utility/my_calculate.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/widgets/show_progress.dart';
 
@@ -53,40 +55,73 @@ class _NonFinishJobState extends State<NonFinishJob> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        showtitle(head: 'ชื่อพนักงาน :', value: dataUserLogin[1]),
-        showtitle(head: 'ตำแหน่ง :', value: dataUserLogin[2]),
-        jobModels.isEmpty
-            ? const ShowProgress()
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                itemCount: jobModels.length,
-                itemBuilder: (context, index) =>
-                    ShowText(text: jobModels[index].job),
-              ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          showtitle(head: 'ชื่อพนักงาน :', value: dataUserLogin[1]),
+          showtitle(head: 'ตำแหน่ง :', value: dataUserLogin[2]),
+          jobModels.isEmpty
+              ? const ShowProgress()
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  itemCount: jobModels.length,
+                  itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Detail(jobModel: jobModels[index]),
+                              )).then((value) {});
+                        },
+                        child: showtitle(
+                          head: 'Job',
+                          value: jobModels[index].job,
+                          detail: MyCalculate()
+                              .cutWord(Word: jobModels[index].detail),
+                        ),
+                      )),
+        ],
+      ),
     );
   }
 
-  Card showtitle({required String head, required String value}) {
+  Card showtitle(
+      {required String head, required String value, String? detail}) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 1,
-              child: ShowText(
-                text: head,
-                textStyle: MyConstant().h2Style(),
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ShowText(
+                    text: head,
+                    textStyle: MyConstant().h2Style(),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: ShowText(text: value),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 2,
-              child: ShowText(text: value),
-            ),
+            detail == null
+                ? const SizedBox()
+                : Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ShowText(text: detail),
+                    ),
+                  ),
           ],
         ),
       ),

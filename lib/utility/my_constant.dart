@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MyConstant {
   // Field
-  static Color primary = const Color.fromARGB(255, 6, 135, 170);
+  static Color primary = Color.fromARGB(255, 3, 146, 185);
   static Color dark = Colors.black;
   static Color active = Color.fromARGB(255, 92, 83, 83);
 
@@ -12,8 +12,8 @@ class MyConstant {
   BoxDecoration bgBox() {
     return BoxDecoration(
       gradient: RadialGradient(
-        radius: 1.5,
-        center: const Alignment(-0.3, -0.35),
+        radius: 1.2,
+        center: const Alignment(-0.3, -0.30),
         colors: [Colors.white, primary],
       ),
     );
