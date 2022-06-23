@@ -3,7 +3,7 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class JobModel {
   final String id;
-  final String idOffice;
+  final String idOfficer;
   final String job;
   final String detail;
   final String lat;
@@ -12,7 +12,7 @@ class JobModel {
   final String status;
   JobModel({
     required this.id,
-    required this.idOffice,
+    required this.idOfficer,
     required this.job,
     required this.detail,
     required this.lat,
@@ -24,7 +24,7 @@ class JobModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'idOffice': idOffice,
+      'idOfficer': idOfficer,
       'job': job,
       'detail': detail,
       'lat': lat,
@@ -37,7 +37,7 @@ class JobModel {
   factory JobModel.fromMap(Map<String, dynamic> map) {
     return JobModel(
       id: map['id'] as String,
-      idOffice: map['idOffice'] as String,
+      idOfficer: map['idOfficer'] as String,
       job: map['job'] as String,
       detail: map['detail'] as String,
       lat: map['lat'] as String,
