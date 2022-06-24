@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -188,11 +188,17 @@ class _DetailState extends State<Detail> {
     );
     FormData data = FormData.fromMap(map);
     await Dio().post(path, data: data).then(
-      (value) {
+      (value) async {
         String urlImage =
             'https://www.androidthai.in.th/egat/toy1image/$nameFile';
 
         print('Upload Success urlImage = $urlImage');
+
+        String pathAPI =
+            'https://www.androidthai.in.th/egat/editPathStatusWhereId_toy1.php?isAdd=true&id=${jobModel!.id}&pathImage=$urlImage';
+        await Dio().get(pathAPI).then((value) {
+          Navigator.pop(context);
+        });
       },
     );
   }
