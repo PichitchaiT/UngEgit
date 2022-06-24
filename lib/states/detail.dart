@@ -1,13 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ungegat/main.dart';
 
 import 'package:ungegat/modeis/job_model.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/utility/my_dialog.dart';
+import 'package:ungegat/widgets/show_button.dart';
 import 'package:ungegat/widgets/show_icon_button.dart';
 import 'package:ungegat/widgets/show_image.dart';
 import 'package:ungegat/widgets/show_text.dart';
@@ -64,26 +69,66 @@ class _DetailState extends State<Detail> {
           children: [
             newImage(boxConstraints),
             newdetail(boxConstraints),
+            newmap(boxConstraints),
+            buttonupload(),
           ],
         );
       }),
     );
   }
 
-  Widget newdetail(BoxConstraints boxConstraints) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+  ShowButtom buttonupload() {
+    return ShowButtom(
+      label: 'Upload Image',
+      pressFunc: () {
+        if (file == null) {
+          MyDialog(context: context)
+              .normalDialog(title: 'No Image', subtitle: 'Please Take Photo');
+        } else {
+          processUploadImage();
+        }
+      },
+    );
+  }
+
+  Row newmap(BoxConstraints boxConstraints) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-                    margin: const EdgeInsets.symmetric(vertical: 16),
-                    width: boxConstraints.maxWidth * 0.6,
-                    child: ShowText(text: jobModel!.detail),
-                  ),
+          margin: const EdgeInsets.symmetric(vertical: 16),
+          width: boxConstraints.maxWidth * 0.6,
+          height: boxConstraints.maxHeight * 0.3,
+          child: GoogleMap(
+            initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  double.parse(jobModel!.lat.trim()),
+                  double.parse(jobModel!.lng.trim()),
+                ),
+                zoom: 16),
+            onMapCreated: (value) {},
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget newdetail(BoxConstraints boxConstraints) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 16),
+          width: boxConstraints.maxWidth * 0.6,
+          child: ShowText(text: jobModel!.detail),
+        ),
       ],
     );
   }
 
   Row newImage(BoxConstraints boxConstraints) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           margin: const EdgeInsets.only(
@@ -130,6 +175,25 @@ class _DetailState extends State<Detail> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> processUploadImage() async {
+    String path = 'https://www.androidthai.in.th/egat/saveFile_toy1.php';
+    String nameFile = 'image${Random().nextInt(1000000)}.jpg';
+    Map<String, dynamic> map = {};
+    map['file'] = await MultipartFile.fromFile(
+      file!.path,
+      filename: nameFile,
+    );
+    FormData data = FormData.fromMap(map);
+    await Dio().post(path, data: data).then(
+      (value) {
+        String urlImage =
+            'https://www.androidthai.in.th/egat/toy1image/$nameFile';
+
+        print('Upload Success urlImage = $urlImage');
+      },
     );
   }
 }
