@@ -60,61 +60,76 @@ class _DetailState extends State<Detail> {
         BuildContext context,
         BoxConstraints boxConstraints,
       ) {
-        return Center(
-          child: Column(
-            children: [
-              newImage(boxConstraints),
-            ],
-          ),
+        return ListView(
+          children: [
+            newImage(boxConstraints),
+            newdetail(boxConstraints),
+          ],
         );
       }),
     );
   }
 
-  Container newImage(BoxConstraints boxConstraints) {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 36,
-        bottom: 16,
-      ),
-      width: boxConstraints.maxWidth * 0.6,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: file == null
-                ? const ShowImage(path: 'images/image.png')
-                : Image.file(file!),
+  Widget newdetail(BoxConstraints boxConstraints) {
+    return Row(
+      children: [
+        Container(
+                    margin: const EdgeInsets.symmetric(vertical: 16),
+                    width: boxConstraints.maxWidth * 0.6,
+                    child: ShowText(text: jobModel!.detail),
+                  ),
+      ],
+    );
+  }
+
+  Row newImage(BoxConstraints boxConstraints) {
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            top: 36,
+            bottom: 16,
           ),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: ShowIconButton(
-              iconData: Icons.add_a_photo,
-              pressFunc: () {
-                MyDialog(context: context).normalDialog(
-                  lable: 'Camera',
-                  lable2: 'Gallery',
+          width: boxConstraints.maxWidth * 0.6,
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: file == null
+                    ? const ShowImage(path: 'images/image.png')
+                    : Image.file(file!),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: ShowIconButton(
+                  iconData: Icons.add_a_photo,
                   pressFunc: () {
-                    processTakePhoto(
-                      imageSource: ImageSource.camera,
+                    MyDialog(context: context).normalDialog(
+                      lable: 'Camera',
+                      lable2: 'Gallery',
+                      pressFunc: () {
+                        processTakePhoto(
+                          imageSource: ImageSource.camera,
+                        );
+                        Navigator.pop(context);
+                      },
+                      pressFunc2: () {
+                        processTakePhoto(
+                          imageSource: ImageSource.gallery,
+                        );
+                        Navigator.pop(context);
+                      },
+                      title: 'Source Image',
+                      subtitle: 'Please Tab Camera or Gallery',
                     );
-                    Navigator.pop(context);
                   },
-                  pressFunc2: () {
-                    processTakePhoto(
-                      imageSource: ImageSource.gallery,
-                    );
-                    Navigator.pop(context);
-                  },
-                  title: 'Source Image',
-                  subtitle: 'Please Tab Camera or Gallery',
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
