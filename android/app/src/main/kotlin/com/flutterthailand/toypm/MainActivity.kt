@@ -1,4 +1,4 @@
-package com.flutterthailand.ungegat
+package com.flutterthailand.toypm
 
 import io.flutter.embedding.android.FlutterActivity
 

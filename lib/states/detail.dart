@@ -71,7 +71,7 @@ class _DetailState extends State<Detail> {
   }
 
   Widget newdetail(BoxConstraints boxConstraints) {
-    return Row(
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
                     margin: const EdgeInsets.symmetric(vertical: 16),
@@ -83,7 +83,7 @@ class _DetailState extends State<Detail> {
   }
 
   Row newImage(BoxConstraints boxConstraints) {
-    return Row(
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           margin: const EdgeInsets.only(
